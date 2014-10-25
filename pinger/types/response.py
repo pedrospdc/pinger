@@ -1,3 +1,6 @@
+__all__ = ('ResponseError', 'InvalidStatusCode', 'Response')
+
+
 class ResponseError(object):
     """
     Base response error object type
@@ -13,8 +16,16 @@ class ResponseError(object):
     expected_result = None
     actual_result = None
 
+    def __init__(self, expected_result, actual_result):
+        self.expected_result = expected_result
+        self.actual_result = actual_result
+
     def __repr__(self):
-        self.message
+        return 'ResponseError: {message}, ' \
+               'expected result: {expected_result}, ' \
+               'actual result: {actual_result}'.format(message=self.message,
+                                                       expected_result=self.expected_result,
+                                                       actual_result=self.actual_result)
 
 
 class InvalidStatusCode(ResponseError):
@@ -29,7 +40,13 @@ class Response(object):
     name = None
     errors = None
 
+    def __init__(self, name)
+        self.name = name
+
     @property
     def ok(self):
         # Tells wether the request was successful or not
         return not self.errors
+
+    def add_error(self, error):
+        self.errors.append(error)
