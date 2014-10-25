@@ -1,2 +1,6 @@
+from pinger.app import PingerApp
+
+
 def main():
-    pass
+    app = PingerApp()
+    app.load_config()

@@ -1,0 +1,27 @@
+{
+
+    "default_timeout": 30,  
+    "default_interval": 10,
+
+    "plugins": [ 
+        "email.py"
+    ],
+    "websites": [
+        {
+            "name": "Wat 1",
+            "url": "http://www.google.com.br/",
+            "expected_content": "Hola!",
+            "expected_status_code": 200,
+
+            "timeout": 10,
+
+            "interval": 3
+        },
+        {
+            "name": "Wat 2",
+            "url": "http://www.uol.com.br/",
+            "expected_content": "Hola!",
+            "expected_status_code": 200
+        }
+    ]
+}
