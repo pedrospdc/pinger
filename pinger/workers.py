@@ -44,7 +44,7 @@ def watcher(url, expected_content, expected_status_code, interval, timeout, queu
                      'message': 'Expected content not found on request content'}
             response['errors'].append(error)
 
-    response['status'] = not response['errors'] and response.get('elapsed')
+    response['status'] = bool(not response['errors'] and response.get('elapsed'))
 
     # Inserts response into post processing queue
     queue.put(response)

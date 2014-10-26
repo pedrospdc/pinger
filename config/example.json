@@ -4,7 +4,8 @@
     "main_process_sleep": 0.5,
     "plugins": [
         "log",
-        "sqlite"
+        "sqlite",
+        "stdout"
     ],
     "plugin_config": {
         "log": {
@@ -22,7 +23,7 @@
             "url": "http://www.google.com.br/",
             "expected_content": "google",
             "expected_status_code": 200,
-            "timeout": 0.1,
+            "timeout": 1,
             "interval": 3
         },
         {

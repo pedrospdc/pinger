@@ -51,3 +51,8 @@ Plugins
 It's rather easy to create a plugin for Pinger. Check pinger/ext/__init__.py for some documentation and
 I recommend taking a look at the existing plugins. Put your plugins in pinger/ext/plugins and add them to
 the plugins section on your configuration.
+
+*Available Plugins*
+* stdout - Prints logs to stdout
+* sqlite - Saves results into an sqlite database
+* log - Logs results
