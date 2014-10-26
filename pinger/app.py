@@ -6,6 +6,7 @@ import threading
 from pinger.config import Config
 from pinger.daemon import Daemon
 from pinger.exceptions import ConfigException
+from pinger.ext import ActionProvider
 from pinger.workers import watcher, post_processor
 
 local = threading.local()
@@ -32,6 +33,11 @@ class PingerApp(Daemon):
         for plugin in self.config.get('plugins', []):
             __import__(prefix.format(plugin))
 
+        local.plugins = []
+
+        for Plugin in ActionProvider.plugins:
+            local.plugins.append(Plugin())
+
     def set_thread_app(self):
         local.app = self
 
@@ -49,7 +55,8 @@ class PingerApp(Daemon):
                                                   i['expected_status_code'],
                                                   i.get('interval', self.config['default_interval']),
                                                   i.get('timeout', self.config['default_timeout']),
-                                                  result_queue))
+                                                  result_queue),
+                                            name=i['name'])
                 p.start()
                 processes.append(p)
 

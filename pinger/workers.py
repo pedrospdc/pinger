@@ -5,7 +5,6 @@ import time
 import requests
 
 from pinger.types import Response, InvalidContent, InvalidStatusCode, Timeout
-from pinger.ext import ActionProvider
 
 
 def watcher(url, expected_content, expected_status_code, interval, timeout, queue):
@@ -14,7 +13,7 @@ def watcher(url, expected_content, expected_status_code, interval, timeout, queu
     processed afterwards by a different worker
     """
     response = Response(multiprocessing.current_process().name, url)
-
+    print response
     try:
         request_response = requests.get(url, timeout=timeout)
     except requests.exceptions.ReadTimeout:
@@ -47,10 +46,10 @@ def post_processor(queue):
     elapsed     Time taken for the request to be done
     ==========  ==========================================================
     """
+    from pinger.app import local
     while True:
         response = queue.get()
-        for Plugin in ActionProvider.plugins:
-            plugin = Plugin()
+        for plugin in local.plugins:
             plugin.receive(name=response['name'],
                            url=response['url'],
                            status=response['status'],

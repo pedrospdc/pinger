@@ -60,8 +60,8 @@ class Response(object):
         self.name = name
         self.url = url
 
-    def __repr__(self):
-        return '<{name} status={status}>'.format(name=self.name, status=self.status)
+    #def __repr__(self):
+    #    return '<{name} status={status}>'.format(name=self.name, status=self.status)
 
     @property
     def status(self):
