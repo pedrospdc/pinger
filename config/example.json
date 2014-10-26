@@ -5,6 +5,13 @@
     "plugins": [
         "log"
     ],
+    "plugin_config": {
+        "log": {
+            "path": "%HOME_DIR%/logs/%CURRENT_DATE%.log",
+            "logger_name": "pinger",
+            "format": "%(asctime)s %(levelname)s %(message)s"
+        }
+    },
     "websites": [
         {
             "name": "Google",
