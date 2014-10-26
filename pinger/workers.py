@@ -4,33 +4,45 @@ import time
 
 import requests
 
-from pinger.types import Response, InvalidContent, InvalidStatusCode, Timeout
-
 
 def watcher(url, expected_content, expected_status_code, interval, timeout, queue):
     """
     Makes a request and validates the response. Response is sent to given queue to be
     processed afterwards by a different worker
     """
-    response = Response(multiprocessing.current_process().name, url)
-    print response
+    response = {'name': multiprocessing.current_process().name,
+                'url': url,
+                'errors': [],
+                'elapsed': None}
+
     try:
         request_response = requests.get(url, timeout=timeout)
     except requests.exceptions.ReadTimeout:
-        error = Timeout('Open page', 'Timed out after {} seconds'.format(timeout))
-        response.add_error(error)
+        error = {'expected_result': 'Open page',
+                 'actual_result': 'Timed out after {} seconds'.format(timeout),
+                 'name': 'Timeout',
+                 'message': 'Request timed out'}
+        response['errors'].append(error)
     else:
-        response.set_elapsed_time(request_response.elapsed)
+        response['elapsed'] = request_response.elapsed
 
         if expected_status_code != request_response.status_code:
-            error = InvalidStatusCode(expected_result=expected_status_code, actual_result=request_response.status_code)
-            response.add_error(error)
+            error = {'expected_result': expected_status_code,
+                     'actual_result': request_response.status_code,
+                     'name': 'InvalidStatusCode',
+                     'message': 'Status code differs from expected status code'}
+            response['errors'].append(error)
 
         if expected_content not in request_response.text:
-            error = InvalidContent(expected_result=expected_content, actual_result='Content of {}'.format(url))
-            response.add_error(error)
+            error = {'expected_result': expected_content,
+                     'actual_result': 'Content of {}'.format(url),
+                     'name': 'InvalidContent',
+                     'message': 'Expected content not found on request content'}
+            response['errors'].append(error)
 
-    queue.put(response.to_dict())
+    response['status'] = not response['errors'] and response.get('elapsed')
+
+    queue.put(response)
     time.sleep(interval)
     return watcher(url, expected_content, expected_status_code, interval, timeout, queue)
 
