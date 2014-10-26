@@ -1,12 +1,17 @@
-
 import multiprocessing
 import os
 import time
+import threading
 
 from pinger.config import Config
 from pinger.daemon import Daemon
 from pinger.exceptions import ConfigException
 from pinger.workers import watcher, post_processor
+
+local = threading.local()
+
+
+get_current_app = lambda: getattr(local, 'app', None)
 
 
 class PingerApp(Daemon):
@@ -26,6 +31,9 @@ class PingerApp(Daemon):
 
         for plugin in self.config.get('plugins', []):
             __import__(prefix.format(plugin))
+
+    def set_thread_app(self):
+        local.app = self
 
     def run(self):
         """

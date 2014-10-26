@@ -3,7 +3,7 @@
     "default_interval": 10,
     "main_process_sleep": 0.5,
     "plugins": [
-        "save_on_db"
+        "log"
     ],
     "websites": [
         {
