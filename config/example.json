@@ -3,13 +3,17 @@
     "default_interval": 10,
     "main_process_sleep": 0.5,
     "plugins": [
-        "log"
+        "log",
+        "sqlite"
     ],
     "plugin_config": {
         "log": {
-            "path": "%HOME_DIR%/logs/%CURRENT_DATE%.log",
+            "path": "%HOME_DIR%/pinger/logs/%CURRENT_DATE%.log",
             "logger_name": "pinger",
             "format": "%(asctime)s %(levelname)s %(message)s"
+        },
+        "sqlite": {
+            "database": "%HOME_DIR%/pinger/db.sqlite"
         }
     },
     "websites": [
