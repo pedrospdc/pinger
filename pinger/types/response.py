@@ -1,4 +1,4 @@
-__all__ = ('ResponseError', 'InvalidStatusCode', 'Response')
+__all__ = ('ResponseError', 'InvalidStatusCode', 'InvalidContent', 'Response')
 
 
 class ResponseError(object):
@@ -32,16 +32,24 @@ class InvalidStatusCode(ResponseError):
     message = 'Status code differs from expected status code'
 
 
+class InvalidContent(ResponseError):
+    message = 'Expected content not found on request content'
+
+
 class Response(object):
     """
     Pinger Response object.
     """
 
     name = None
-    errors = None
+    elapsed = None
+    errors = []
 
-    def __init__(self, name)
+    def __init__(self, name):
         self.name = name
+
+    def __repr__(self):
+        return '<{name} status={status}>'.format(name=self.name, status=self.ok)
 
     @property
     def ok(self):
@@ -50,3 +58,6 @@ class Response(object):
 
     def add_error(self, error):
         self.errors.append(error)
+
+    def set_elapsed_time(self, elapsed_time):
+        self.elapsed = elapsed_time

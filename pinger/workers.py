@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import multiprocessing
 import time
 
@@ -6,8 +7,8 @@ import requests
 from pinger.types import Response, InvalidContent, InvalidStatusCode
 
 
-def watch(url, expected_content, expected_status_code, interval, timeout, auth=None):
-    request_response = requests.get(url, auth=auth, timeout=timeout)
+def watcher(url, expected_content, expected_status_code, interval, timeout):
+    request_response = requests.get(url, timeout=timeout)
     response = Response(multiprocessing.current_process().name)
 
     if expected_status_code != request_response.status_code:
@@ -15,8 +16,9 @@ def watch(url, expected_content, expected_status_code, interval, timeout, auth=N
         response.add_error(error)
 
     if expected_content not in request_response.text:
-        error = InvalidContent(expected_content=expected_content, actual_result=request_response.text)
+        error = InvalidContent(expected_result=expected_content, actual_result='Content of {}'.format(url))
         response.add_error(error)
 
+    print response
     time.sleep(interval)
-    return response
+    return watcher(url, expected_content, expected_status_code, interval, timeout)
