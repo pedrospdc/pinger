@@ -27,7 +27,7 @@ class ActionProvider:
 
     ========  ========================================================
     title     The text to be displayed, describing the action
-    receive   Method able to receive (status, errors, elapsed)
+    receive   Method able to receive (name, url, status, errors, elapsed)
     ========  ========================================================
     """
     __metaclass__ = PluginMount

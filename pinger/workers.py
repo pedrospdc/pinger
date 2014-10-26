@@ -13,7 +13,7 @@ def watcher(url, expected_content, expected_status_code, interval, timeout, queu
     Makes a request and validates the response. Response is sent to given queue to be
     processed afterwards by a different worker
     """
-    response = Response(multiprocessing.current_process().name)
+    response = Response(multiprocessing.current_process().name, url)
 
     try:
         request_response = requests.get(url, timeout=timeout)
@@ -51,4 +51,8 @@ def post_processor(queue):
         response = queue.get()
         for Plugin in ActionProvider.plugins:
             plugin = Plugin()
-            plugin.receive(status=response['status'], errors=response['errors'], elapsed=response['elapsed'])
+            plugin.receive(name=response['name'],
+                           url=response['url'],
+                           status=response['status'],
+                           errors=response['errors'],
+                           elapsed=response['elapsed'])

@@ -7,5 +7,5 @@ class SaveOnDb(ActionProvider):
     """
     title = 'SaveOnDb'
 
-    def receive(self, status, errors, elapsed):
-        print status, errors, elapsed
+    def receive(self, name, url, status, errors, elapsed):
+        pass

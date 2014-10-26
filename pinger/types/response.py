@@ -52,11 +52,13 @@ class Response(object):
     """
 
     name = None
+    url = None
     elapsed = None
     errors = []
 
-    def __init__(self, name):
+    def __init__(self, name, url):
         self.name = name
+        self.url = url
 
     def __repr__(self):
         return '<{name} status={status}>'.format(name=self.name, status=self.status)
@@ -73,6 +75,8 @@ class Response(object):
         self.elapsed = elapsed_time
 
     def to_dict(self):
-        return {'status': self.status,
+        return {'name': self.name,
+                'url': self.url,
+                'status': self.status,
                 'errors': [error.to_dict() for error in self.errors],
                 'elapsed': self.elapsed}
