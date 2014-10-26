@@ -9,17 +9,17 @@
     ],
     "websites": [
         {
-            "name": "Wat 1",
+            "name": "Google",
             "url": "http://www.google.com.br/",
-            "expected_content": "Hola!",
+            "expected_content": "google",
             "expected_status_code": 200,
-            "timeout": 10,
+            "timeout": 0.1,
             "interval": 3
         },
         {
-            "name": "Wat 2",
-            "url": "http://www.uol.com.br/",
-            "expected_content": "Hola!",
+            "name": "FSecure",
+            "url": "http://www.f-secure.com",
+            "expected_content": "",
             "expected_status_code": 200
         }
     ]

@@ -26,13 +26,15 @@ class PingerApp(Daemon):
     def run(self):
         while True:
             processes = []
+            result_queue = multiprocessing.Queue()
             for i in self.config['websites']:
                 p = multiprocessing.Process(target=watcher,
                                             args=(i['url'],
                                                   i['expected_content'],
                                                   i['expected_status_code'],
                                                   i.get('interval', self.config['default_interval']),
-                                                  i.get('timeout', self.config['default_timeout'])))
+                                                  i.get('timeout', self.config['default_timeout']),
+                                                  result_queue))
                 p.start()
                 processes.append(p)
 

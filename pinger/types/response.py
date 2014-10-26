@@ -1,4 +1,4 @@
-__all__ = ('ResponseError', 'InvalidStatusCode', 'InvalidContent', 'Response')
+__all__ = ('ResponseError', 'InvalidStatusCode', 'InvalidContent', 'Response', 'Timeout')
 
 
 class ResponseError(object):
@@ -34,6 +34,10 @@ class InvalidStatusCode(ResponseError):
 
 class InvalidContent(ResponseError):
     message = 'Expected content not found on request content'
+
+
+class Timeout(ResponseError):
+    message = 'Request timed out'
 
 
 class Response(object):
