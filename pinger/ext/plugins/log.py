@@ -8,7 +8,26 @@ from pinger.ext import ActionProvider
 
 class Log(ActionProvider):
     """
-    Receives a response and logs it
+    Receives a response and logs it. Creates the parent folder if it doesnt exists.
+
+    Expects the following settings:
+
+    ```
+    {"plugin_config": {
+        "log": {
+            "path": "%HOME_DIR%/logs/%CURRENT_DATE%.log",
+            "logger_name": "pinger",
+            "format": "%(asctime)s %(levelname)s %(message)s"
+        }
+    }}
+    ```
+
+    Interpolates __path__ with:
+    ===============  ======================================
+    %HOME_DIR%       User home path
+    %CURRENT_DATE%   Current date with a %Y%m%d format
+    ===============  ======================================
+
     """
     title = 'Log'
     variables = {

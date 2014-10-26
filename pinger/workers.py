@@ -18,14 +18,17 @@ def watcher(url, expected_content, expected_status_code, interval, timeout, queu
     try:
         request_response = requests.get(url, timeout=timeout)
     except requests.exceptions.ReadTimeout:
+        # Cant validate a timed out request
         error = {'expected_result': 'Open page',
                  'actual_result': 'Timed out after {} seconds'.format(timeout),
                  'name': 'Timeout',
                  'message': 'Request timed out'}
         response['errors'].append(error)
     else:
+        # Request finished successfully, validating...
         response['elapsed'] = request_response.elapsed
 
+        # Checks status code
         if expected_status_code != request_response.status_code:
             error = {'expected_result': expected_status_code,
                      'actual_result': request_response.status_code,
@@ -33,6 +36,7 @@ def watcher(url, expected_content, expected_status_code, interval, timeout, queu
                      'message': 'Status code differs from expected status code'}
             response['errors'].append(error)
 
+        # Looks for expected content on response text
         if expected_content not in request_response.text:
             error = {'expected_result': expected_content,
                      'actual_result': 'Content of {}'.format(url),
@@ -42,6 +46,7 @@ def watcher(url, expected_content, expected_status_code, interval, timeout, queu
 
     response['status'] = not response['errors'] and response.get('elapsed')
 
+    # Inserts response into post processing queue
     queue.put(response)
     time.sleep(interval)
     return watcher(url, expected_content, expected_status_code, interval, timeout, queue)
