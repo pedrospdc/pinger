@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 if setuptools.__version__ < '0.7':
     raise RuntimeError("setuptools must be newer than 0.7")
 
-version = "0.1.0"
+version = "0.1.2"
 
 setup(
     name="pinger",
