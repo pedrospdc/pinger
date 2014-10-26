@@ -18,7 +18,6 @@ setup(
     url="https://github.com/pedrospdc/pinger",
     download_url="https://github.com/pedrospdc/pinger/tarball/{}".format(version),
     packages=find_packages(),
-    long_description=open('README.md').read(),
     zip_safe=False,
     license="MIT",
     classifiers=[
