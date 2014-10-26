@@ -13,10 +13,13 @@ Features
 
 Installation
 ------------
-* Copy config/example.json to somewhere
-* Edit the file as you will
-* Set environment variable PINGER_SETTINGS setting to your configuration file
-* Run pinger
+```
+$ pip install pinger
+$ curl https://raw.githubusercontent.com/pedrospdc/pinger/master/config/example.json >> ~/pinger/config.json
+$ vim ~/pinger/config.json
+$ echo "export PINGER_SETTINGS=~/pinger/config.json" >> ~/.bashrc
+$ pinger
+```
 
 
 Config
