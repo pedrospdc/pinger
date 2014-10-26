@@ -28,6 +28,9 @@ class PingerApp(Daemon):
             __import__(prefix.format(plugin))
 
     def run(self):
+        """
+        Main loop
+        """
         while True:
             processes = []
             result_queue = multiprocessing.Queue()
