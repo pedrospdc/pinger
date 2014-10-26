@@ -9,6 +9,10 @@ from pinger.ext import ActionProvider
 
 
 def watcher(url, expected_content, expected_status_code, interval, timeout, queue):
+    """
+    Makes a request and validates the response. Response is sent to given queue to be
+    processed afterwards by a different worker
+    """
     response = Response(multiprocessing.current_process().name)
 
     try:
