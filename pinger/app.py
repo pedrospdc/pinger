@@ -1,3 +1,4 @@
+
 import multiprocessing
 import os
 import time
@@ -5,7 +6,7 @@ import time
 from pinger.config import Config
 from pinger.daemon import Daemon
 from pinger.exceptions import ConfigException
-from pinger.workers import watcher
+from pinger.workers import watcher, post_processor
 
 
 class PingerApp(Daemon):
@@ -20,8 +21,11 @@ class PingerApp(Daemon):
             raise ConfigException('The environment variable PINGER_SETTINGS must be set.')
         self.config = Config(os.environ['PINGER_SETTINGS'])
 
-    def callback(*args, **kwargs):
-        print args, kwargs
+    def load_plugins(self):
+        prefix = 'pinger.ext.plugins.{}'
+
+        for plugin in self.config.get('plugins', []):
+            __import__(prefix.format(plugin))
 
     def run(self):
         while True:
@@ -37,6 +41,11 @@ class PingerApp(Daemon):
                                                   result_queue))
                 p.start()
                 processes.append(p)
+
+                post_processor_process = multiprocessing.Process(target=post_processor,
+                                                                 args=(result_queue,))
+                post_processor_process.start()
+                processes.append(post_processor_process)
 
             for process in processes:
                 process.join()

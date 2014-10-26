@@ -31,3 +31,9 @@ class Config(object):
             raise ConfigException('Config not loaded')
 
         return self.config[key]
+
+    def get(self, key, replacement):
+        try:
+            return self.__getitem__(key)
+        except AttributeError:
+            return replacement

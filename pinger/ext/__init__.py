@@ -1,3 +1,6 @@
+import imp
+
+
 class PluginMount(type):
     """
     Plugin mount metaclass
@@ -24,11 +27,7 @@ class ActionProvider:
 
     ========  ========================================================
     title     The text to be displayed, describing the action
-
-    url       The URL to the view where the action will be carried out
-
-    selected  Boolean indicating whether the action is the one
-              currently being performed
+    receive   Method able to receive (status, errors, elapsed)
     ========  ========================================================
     """
     __metaclass__ = PluginMount

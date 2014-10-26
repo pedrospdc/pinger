@@ -27,6 +27,12 @@ class ResponseError(object):
                                                        expected_result=self.expected_result,
                                                        actual_result=self.actual_result)
 
+    def to_dict(self):
+        return {'name': self.__class__.__name__,
+                'message': self.message,
+                'actual_result': self.actual_result,
+                'expected_result': self.expected_result}
+
 
 class InvalidStatusCode(ResponseError):
     message = 'Status code differs from expected status code'
@@ -53,15 +59,20 @@ class Response(object):
         self.name = name
 
     def __repr__(self):
-        return '<{name} status={status}>'.format(name=self.name, status=self.ok)
+        return '<{name} status={status}>'.format(name=self.name, status=self.status)
 
     @property
-    def ok(self):
+    def status(self):
         # Tells wether the request was successful or not
-        return not self.errors
+        return not self.errors and self.elapsed
 
     def add_error(self, error):
         self.errors.append(error)
 
     def set_elapsed_time(self, elapsed_time):
         self.elapsed = elapsed_time
+
+    def to_dict(self):
+        return {'status': self.status,
+                'errors': [error.to_dict() for error in self.errors],
+                'elapsed': self.elapsed}
