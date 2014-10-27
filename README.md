@@ -1,13 +1,12 @@
 Pinger
 ======
 
-Website monitoring application
+Service monitoring tool
 
 
 Features
 --------
 * Pluggable (See plugins section)
-* Easy to install and configure
 * Unobtrusive (independent request intervals, parallel requests)
 
 
@@ -25,7 +24,7 @@ $ pinger
 
 Config
 ------
-Pinger supports some few configurations by default. Configurations in bold are required.
+Pinger supports some few configurations by default. Configurations in *italic* are required.
 
 | Param                | Description                                          | Default                   |
 | ------------------   | ---------------------------------------------------- | ------------------------- |
@@ -37,7 +36,7 @@ Pinger supports some few configurations by default. Configurations in bold are r
 
 
 
-Each website has a couple configurations that can overwrite the default configurations.
+Timeout and interval can be overwritten by each website if needed.
 
 | Param                  | Description                                          |
 | ---------------------- | ---------------------------------------------------- |
@@ -52,7 +51,7 @@ Each website has a couple configurations that can overwrite the default configur
 Plugins
 =======
 
-It's rather easy to create a plugin for Pinger. Check pinger/ext/__init__.py for some documentation and
+It's rather easy to create a plugin for Pinger. Check pinger/ext/`__init__`.py for some documentation and
 I recommend taking a look at the existing plugins. Put your plugins in pinger/ext/plugins and add them to
 the plugins section on your configuration.
 
