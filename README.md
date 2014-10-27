@@ -18,6 +18,7 @@ $ pip install pinger
 $ curl https://raw.githubusercontent.com/pedrospdc/pinger/master/config/example.json >> ~/pinger/config.json
 $ vim ~/pinger/config.json
 $ echo "export PINGER_SETTINGS=~/pinger/config.json" >> ~/.bashrc
+$ reset
 $ pinger
 ```
 
