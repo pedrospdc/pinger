@@ -28,10 +28,8 @@ class PingerApp(Daemon):
         self.config = Config(os.environ['PINGER_SETTINGS'])
 
     def load_plugins(self):
-        prefix = 'pinger.ext.plugins.{}'
-
         for plugin in self.config.get('plugins', []):
-            __import__(prefix.format(plugin))
+            __import__(plugin)
 
         local.plugins = []
 

@@ -3,9 +3,9 @@
     "default_interval": 10,
     "main_process_sleep": 0.5,
     "plugins": [
-        "log",
-        "sqlite",
-        "stdout"
+        "pinger.ext.plugins.log",
+        "pinger.ext.plugins.sqlite",
+        "pinger.ext.plugins.stdout"
     ],
     "plugin_config": {
         "log": {
